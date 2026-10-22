@@ -1,0 +1,321 @@
+.showcase {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgb(255 255 255 / 0.9);
+  border-radius: 32px;
+  background: rgb(255 255 255 / 0.6);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tabs with sliding indicator */
+.tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5px;
+  border-radius: 16px;
+  background: var(--paper-2);
+}
+
+.indicator {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 5px;
+  width: calc(50% - 5px);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.55s var(--ease-back);
+}
+
+.tab {
+  position: relative;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  font-weight: 700;
+  color: var(--ink-3);
+  transition: color 0.3s var(--ease);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--green);
+}
+
+/* Stage */
+.stage {
+  --mx: 50%;
+  --my: 40%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: clamp(340px, 34vw, 460px);
+  overflow: hidden;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at var(--mx) var(--my), rgb(255 255 255 / 0.95), transparent 45%),
+    radial-gradient(60% 60% at 50% 60%, rgb(132 204 22 / 0.35), transparent 70%),
+    linear-gradient(160deg, #eefaf1, #dff3e7 60%, #d7eff4);
+  perspective: 900px;
+}
+
+.kw {
+  position: absolute;
+  bottom: -0.12em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-hero);
+  font-size: clamp(6rem, 12vw, 10rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(21 128 61 / 0.25);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.ring,
+.ring2 {
+  position: absolute;
+  width: 74%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px dashed rgb(21 128 61 / 0.25);
+}
+
+.ring2 {
+  width: 52%;
+  border: 1px solid rgb(8 145 178 / 0.2);
+}
+
+.tilt {
+  position: absolute;
+  inset: 9% 16% 11%;
+  transform-style: preserve-3d;
+}
+
+/* Fixed frame: the photo is always contained, never cropped or upscaled past the frame. */
+.img {
+  position: absolute;
+  inset: 0;
+}
+
+/* Swap is driven by data-state; CSS transitions always settle, even if interrupted. */
+.img[data-state="idle"],
+.img[data-state="out"] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.img[data-state="in"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .img {
+    will-change: transform, opacity;
+  }
+
+  .img[data-state="idle"],
+  .img[data-state="out"] {
+    transform: scale(0.86) rotate(-4deg);
+    filter: blur(6px);
+  }
+
+  .img[data-state="out"] {
+    transition:
+      transform 0.5s cubic-bezier(0.4, 0, 1, 1),
+      opacity 0.4s ease,
+      filter 0.4s ease,
+      visibility 0s linear 0.5s;
+  }
+
+  .img[data-state="in"] {
+    transform: none;
+    filter: none;
+    transition:
+      transform 0.85s cubic-bezier(0.34, 1.3, 0.64, 1) 0.25s,
+      opacity 0.5s ease 0.25s,
+      filter 0.5s ease 0.25s,
+      visibility 0s;
+  }
+}
+
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 34px rgb(11 42 30 / 0.3));
+}
+
+.chips {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.chips li {
+  position: absolute;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.chip0 {
+  top: 16%;
+  left: 5%;
+}
+
+.chip1 {
+  bottom: 18%;
+  right: 5%;
+}
+
+.progress {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  gap: 6px;
+}
+
+.progress span {
+  position: relative;
+  width: 26px;
+  height: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgb(11 42 30 / 0.12);
+}
+
+.progress span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--green);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.progress span[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 6px 8px 4px;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+
+.price small {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--ink-3);
+}
+
+.metaLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.view {
+  font-weight: 600;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.view:hover {
+  color: var(--green);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ring {
+    animation: spin 40s linear infinite;
+  }
+
+  .ring2 {
+    animation: spin 28s linear infinite reverse;
+  }
+
+  .chips li {
+    animation: chipIn 0.7s var(--ease-back) both, bob 5s ease-in-out 0.8s infinite;
+  }
+
+  .chip1 {
+    animation-delay: 0.15s, 1.4s !important;
+  }
+
+  .progress span[data-active="true"][data-auto="true"]::after {
+    animation: fill 4.5s linear;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes chipIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.85);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@media (max-width: 560px) {
+  .meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .metaLinks {
+    justify-content: space-between;
+  }
+}

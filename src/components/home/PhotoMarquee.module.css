@@ -1,0 +1,93 @@
+.marquee {
+  display: grid;
+  gap: 16px;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.row {
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+}
+
+.card {
+  position: relative;
+  flex: none;
+  width: clamp(150px, 14vw, 210px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--paper-2);
+  box-shadow: var(--shadow-md);
+}
+
+.card img {
+  object-fit: cover;
+  transition: transform 0.8s var(--ease);
+}
+
+.card figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 40px 14px 12px;
+  background: linear-gradient(180deg, transparent, rgb(11 42 30 / 0.85));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  transform: translateY(8px);
+  opacity: 0.92;
+  transition:
+    transform 0.4s var(--ease),
+    opacity 0.4s var(--ease);
+}
+
+@media (hover: hover) {
+  .card:hover img {
+    transform: scale(1.08);
+  }
+
+  .card:hover figcaption {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .row[data-dir="left"] .track {
+    animation: left 60s linear infinite;
+  }
+
+  .row[data-dir="right"] .track {
+    animation: right 60s linear infinite;
+  }
+
+  .marquee:hover .track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes left {
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes right {
+  from {
+    transform: translateX(-33.333%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row {
+    overflow-x: auto;
+  }
+}

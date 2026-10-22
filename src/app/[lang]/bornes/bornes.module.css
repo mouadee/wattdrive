@@ -1,0 +1,127 @@
+.models {
+  display: grid;
+  gap: clamp(48px, 6vw, 96px);
+}
+
+.model {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+  align-items: center;
+}
+
+.modelMedia {
+  grid-column: 1 / span 6;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(closest-side at 50% 55%, rgb(132 204 22 / 0.22), transparent 75%),
+    linear-gradient(180deg, #f3faf5, #e9f6ee);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.modelMedia img {
+  filter: drop-shadow(0 26px 32px rgb(11 42 30 / 0.22));
+}
+
+.model:nth-child(even) .modelMedia {
+  grid-column: 7 / -1;
+  order: 2;
+}
+
+.modelBody {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+}
+
+.model:nth-child(even) .modelBody {
+  grid-column: 1 / span 5;
+}
+
+.modelBody h2 a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+.highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.highlights li {
+  padding: 7px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.modelFoot {
+  display: grid;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.note {
+  margin-top: 32px;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.compareHead {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.compare > :last-child {
+  grid-column: 5 / -1;
+  padding: 8px 28px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.help > div:first-child {
+  display: grid;
+  gap: 16px;
+  max-width: 40rem;
+}
+
+.help :global(.lead) {
+  color: var(--on-dark-2);
+}
+
+@media (max-width: 900px) {
+  .modelMedia,
+  .modelBody,
+  .model:nth-child(even) .modelMedia,
+  .model:nth-child(even) .modelBody,
+  .compareHead,
+  .compare > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .model:nth-child(even) .modelMedia {
+    order: 0;
+  }
+}

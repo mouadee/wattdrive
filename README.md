@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Wattdrive — RAEDIAN NORA & NEO
 
-## Getting Started
-
-First, run the development server:
+Bilingual (FR default / EN) Next.js site for EV charger supply and installation in Morocco.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000 → redirects to /fr
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where to edit things
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| What | File |
+| --- | --- |
+| Phone, WhatsApp number, email, city, domain | `src/config/site.ts` (placeholders marked `TODO`) |
+| Product names, **charger prices**, images, specs, datasheet link | `src/config/products.ts` |
+| **Installation price list** (protection, cable per metre, installation package, VAT label) used by the quote page and PDF | `src/config/pricing.ts` — ⚠️ values copied from the reference quote page, confirm them |
+| Installation gallery ("Nos réalisations") | `src/config/projects.ts` + photos in `public/images/projects/` |
+| Editorial photography (hero, solutions) | `src/config/media.ts` |
+| All text, FR and EN (incl. SEO titles, form errors) | `src/i18n/dictionaries/fr.ts`, `en.ts` |
+| Localized URLs (`/fr/bornes` ↔ `/en/chargers`) | `src/i18n/config.ts` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Product specs set to `null` are hidden. Fill them only from the official RAEDIAN datasheet.
 
-## Learn More
+The homepage "Réalisations" block stays hidden until at least one project in `projects.ts` has a photo.
+The `/realisations` page shows labelled placeholder slots until then.
 
-To learn more about Next.js, take a look at the following resources:
+## Quote page & PDF
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`/fr/devis` (`/en/quote`) is a 2-step configurator: charger + installation items + housing + city + cable length →
+contact details. Submitting sends the lead and reveals the estimated total, and the visitor can download a PDF quote
+(invoice layout: company block, client + city, quote date / validity (30 days, `VALIDITY_DAYS` in `src/lib/quotePdf.ts`),
+itemised table, Total TTC, contact footer — no bank details). Generated in the browser with jsPDF.
+The server recomputes the estimate from `pricing.ts`, so the lead you receive carries the same figures as the PDF.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Design system
 
-## Deploy on Vercel
+Light theme generated with the ui-ux-pro-max skill: see `design-system/wattdrive/MASTER.md` (palette, type, motion) and
+the tokens at the top of `src/app/globals.css`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Lead handling (integration point)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Both forms POST to `src/app/api/leads/route.ts`, which validates server-side and forwards JSON to a webhook:
+
+```
+LEAD_WEBHOOK_URL=https://hook.make.com/…   # Make, Zapier, n8n, CRM endpoint…
+LEAD_WEBHOOK_SECRET=optional-bearer-token
+NEXT_PUBLIC_SITE_URL=https://www.your-domain.ma
+```
+
+- Without `LEAD_WEBHOOK_URL`: in development, leads are only printed to the server console. In production the API
+  returns 503 and visitors are offered WhatsApp instead. Nothing is reported as received when it was not delivered.
+- UTM parameters and `fbclid` from Facebook Ads are attached to each lead.
+- If the Meta Pixel is installed, a `Lead` event fires after a successful submission (`src/lib/submit.ts`).

@@ -1,0 +1,131 @@
+.factors {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.factors li,
+.factors li + li {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 26px 22px;
+  border: 1px solid var(--line) !important;
+  border-radius: 22px;
+  background: var(--white);
+}
+
+.factors :global(.mono) {
+  justify-self: start;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #ffffff;
+  letter-spacing: 0;
+  font-size: 0.85rem;
+}
+
+.factorTitle {
+  font-size: 1.25rem;
+  letter-spacing: -0.015em;
+}
+
+.block {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+  align-items: center;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.block + .block {
+  margin-top: clamp(64px, 8vw, 128px);
+}
+
+.photo {
+  grid-column: 1 / span 6;
+}
+
+.text {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+}
+
+.block:nth-child(even) .photo {
+  grid-column: 7 / -1;
+  order: 2;
+}
+
+.block:nth-child(even) .text {
+  grid-column: 1 / span 5;
+}
+
+.points {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.points ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.points li {
+  padding: 7px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+@media (max-width: 1000px) {
+  .factors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .factors li:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .factors li:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 900px) {
+  .photo,
+  .text,
+  .block:nth-child(even) .photo,
+  .block:nth-child(even) .text {
+    grid-column: 1 / -1;
+  }
+
+  .block:nth-child(even) .photo {
+    order: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .factors {
+    grid-template-columns: 1fr;
+  }
+
+  .factors li,
+  .factors li + li {
+    padding: 20px 0;
+    border-left: 0;
+  }
+
+  .factors li + li {
+    border-top: 1px solid var(--line);
+  }
+}

@@ -1,0 +1,51 @@
+.wrap {
+  position: relative;
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.sizer {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(105%);
+  background: linear-gradient(100deg, var(--green) 0%, #22c55e 45%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.12em;
+}
+
+.word[data-state="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+.word[data-state="out"] {
+  opacity: 0;
+  transform: translateY(-105%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .word {
+    transition:
+      transform 0.7s cubic-bezier(0.7, 0, 0.2, 1),
+      opacity 0.35s ease;
+  }
+
+  .word[data-state="in"] {
+    transition-delay: 0.18s;
+  }
+
+  /* Idle words jump back below without animating */
+  .word[data-state="idle"] {
+    transition: none;
+  }
+}

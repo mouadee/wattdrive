@@ -1,0 +1,68 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  align-items: start;
+}
+
+.item[data-shape="tall"] .media {
+  aspect-ratio: 3 / 4;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 4.4;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.media img {
+  object-fit: cover;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  color: var(--ink-3);
+  border: 1px dashed var(--line-strong);
+  background: radial-gradient(closest-side, rgb(76 214 92 / 0.14), transparent), var(--card);
+}
+
+.brief {
+  max-width: 26ch;
+  font-size: var(--fs-small);
+  color: var(--ink-2);
+}
+
+.caption {
+  display: grid;
+  gap: 4px;
+  padding-top: 14px;
+}
+
+.title {
+  font-weight: 550;
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .item[data-shape="tall"] .media,
+  .media {
+    aspect-ratio: 4 / 3.6;
+  }
+}

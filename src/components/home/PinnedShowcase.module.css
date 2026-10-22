@@ -1,0 +1,220 @@
+.root {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(24px, 3vw, 48px);
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #f2fbf4 0%, #e3f6ea 35%, #e6f4f8 70%, #f2fbf4 100%);
+  background-size: 220% 100%;
+  background-position: 0% 0%;
+}
+
+.kw {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-family: var(--font-hero);
+  font-size: clamp(8rem, 22vw, 20rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 2px rgb(21 128 61 / 0.12);
+  user-select: none;
+  pointer-events: none;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+  min-height: min(760px, calc(100svh - 80px));
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: min(600px, calc(100svh - 160px));
+}
+
+.halo {
+  position: absolute;
+  width: 80%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, #ffffff, rgb(132 204 22 / 0.28) 55%, transparent);
+}
+
+.img {
+  position: absolute;
+  inset: 7% 11%;
+}
+
+.img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 40px 46px rgb(11 42 30 / 0.3));
+}
+
+.panels {
+  display: grid;
+}
+
+.panel {
+  grid-area: 1 / 1;
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+
+.mobileImg {
+  display: none;
+}
+
+.index {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+.name {
+  font-family: var(--font-hero);
+  font-size: clamp(4rem, 2rem + 6vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+  background: linear-gradient(100deg, var(--ink) 0%, var(--green) 70%, var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  font-size: 1.08rem;
+  color: var(--ink-2);
+  max-width: 34rem;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.features li {
+  padding: 7px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.8);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 1.6rem + 1.6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  color: var(--green);
+}
+
+.price small {
+  font-size: 0.4em;
+  letter-spacing: 0;
+  color: var(--ink-3);
+}
+
+.price span {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-3);
+}
+
+.dots {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgb(11 42 30 / 0.2);
+  transition: all 0.4s var(--ease);
+}
+
+.dots span[data-on] {
+  width: 28px;
+  background: var(--green);
+}
+
+.dots em {
+  margin-left: 8px;
+  font-style: normal;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+/* Mobile / reduced motion: stacked panels, each with its own image */
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  .grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .stage,
+  .dots {
+    display: none;
+  }
+
+  .panels {
+    gap: 28px;
+  }
+
+  .panel {
+    grid-area: auto;
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 0.85);
+    box-shadow: var(--shadow-md);
+  }
+
+  .mobileImg {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 280px;
+    border-radius: 20px;
+    background: radial-gradient(closest-side, #ffffff, rgb(132 204 22 / 0.22) 60%, transparent), #eef8f1;
+  }
+
+  .mobileImg img {
+    width: 80%;
+    height: 86%;
+    object-fit: contain;
+  }
+}

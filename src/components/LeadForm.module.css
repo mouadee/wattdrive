@@ -1,0 +1,72 @@
+.form {
+  position: relative;
+  display: grid;
+  gap: 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 20px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.footer {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.privacy {
+  font-size: var(--fs-small);
+  color: var(--ink-3);
+  max-width: 60ch;
+}
+
+.summary {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 3px solid var(--danger);
+  background: var(--danger-soft);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.success {
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+  padding: clamp(24px, 4vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--white);
+}
+
+.success:focus {
+  outline: none;
+}
+
+.successIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer :global(.btn) {
+    width: 100%;
+  }
+}
